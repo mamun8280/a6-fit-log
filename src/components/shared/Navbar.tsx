@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-// Path alias (@) match na korle '../../assets/logo.png' try korte paren
+
 import logo from '@/assets/logo.png'; 
 
 interface NavbarProps {

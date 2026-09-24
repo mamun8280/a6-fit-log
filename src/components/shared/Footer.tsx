@@ -1,34 +1,29 @@
 import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
+import logoImg from '@/assets/logo.png'; 
 
-const Footer: React.FC = () => {
+const Footer = () => {
   return (
-    <footer className="w-full bg-[#090a0c] text-gray-400 py-6 border-t border-gray-900">
-      <div className="container mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+    <footer className="border-t border-gray-800 bg-[#0a0a0c] py-8 text-gray-400">
+      <div className="container mx-auto flex flex-col items-center justify-between gap-4 px-4 md:flex-row md:px-8">
         
-        
-        <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
-        
-          <span className="text-[#ccff00]">
-            <svg 
-              className="w-6 h-6 fill-current" 
-              viewBox="0 0 24 24"
-            >
-              <path d="M7 5v2h2V5H7zm10 0v2h2V5h-2zM3 9v6h2V9H3zm16 0v6h2V9h-2zM7 11h10v2H7v-2zM5 8h2v8H5V8zm12 0h2v8h-2V8z" />
-            </svg>
-          </span>
-
-          
-          <span className="font-black text-xl tracking-tight text-white uppercase font-sans">
-            FITLOG
+        <Link href="/" className="flex items-center gap-3">
+          <Image
+            src={logoImg}
+            alt="FitLog Logo"
+            width={32}
+            height={32}
+            className="h-8 w-auto object-contain"
+          />
+          <span className="text-xl font-black uppercase tracking-wider text-white">
+            FIT<span className="text-[#ccff00]">LOG</span>
           </span>
         </Link>
 
-     
-        <div className="text-xs md:text-sm text-gray-500 font-normal text-center md:text-right">
+        <p className="text-center text-xs md:text-right md:text-sm">
           © 2026 FitLog — Workout Library. Train hard, log honest.
-        </div>
-
+        </p>
       </div>
     </footer>
   );
