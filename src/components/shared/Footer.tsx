@@ -6,9 +6,9 @@ const Footer: React.FC = () => {
     <footer className="w-full bg-[#090a0c] text-gray-400 py-6 border-t border-gray-900">
       <div className="container mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
         
-        {/* Left Side: Exact Logo & FITLOG Typography */}
+        
         <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
-          {/* Lime Dumbbell Icon */}
+        
           <span className="text-[#ccff00]">
             <svg 
               className="w-6 h-6 fill-current" 
@@ -18,13 +18,13 @@ const Footer: React.FC = () => {
             </svg>
           </span>
 
-          {/* FITLOG Bold Condensed Text */}
+          
           <span className="font-black text-xl tracking-tight text-white uppercase font-sans">
             FITLOG
           </span>
         </Link>
 
-        {/* Right Side: Copyright Text */}
+     
         <div className="text-xs md:text-sm text-gray-500 font-normal text-center md:text-right">
           © 2026 FitLog — Workout Library. Train hard, log honest.
         </div>

@@ -20,7 +20,7 @@ const Navbar: React.FC<NavbarProps> = ({
     <nav className="w-full bg-[#0f1115] border-b border-gray-800 text-white">
       <div className="container mx-auto px-4 md:px-8 py-3 navbar">
         
-        {/* Left Side: Logo + FITLOG Text */}
+        
         <div className="navbar-start flex items-center gap-2">
           {/* Mobile Dropdown */}
           <div className="dropdown">
@@ -37,10 +37,10 @@ const Navbar: React.FC<NavbarProps> = ({
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-[#181a20] rounded-box z-[1] mt-3 w-52 p-2 shadow text-gray-300"
+              className="menu menu-sm dropdown-content bg-[#181a20] rounded-box z-1 mt-3 w-52 p-2 shadow text-gray-300"
             >
               <li>
-                <Link href="/workouts" className={activePage === 'Workouts' ? 'text-[#ccff00] font-bold' : ''}>
+                <Link href="/" className={activePage === 'Workouts' ? 'text-[#ccff00] font-bold' : ''}>
                   Workouts
                 </Link>
               </li>
@@ -52,7 +52,7 @@ const Navbar: React.FC<NavbarProps> = ({
             </ul>
           </div>
 
-          {/* Logo Image and Text Side-by-Side */}
+         
           <Link href="/" className="flex items-center gap-2.5 hover:opacity-90">
             <Image
               src={logo}
@@ -68,11 +68,12 @@ const Navbar: React.FC<NavbarProps> = ({
           </Link>
         </div>
 
-        {/* Middle: Navigation Links */}
+        
         <div className="navbar-center hidden lg:flex">
           <div className="flex items-center gap-1 bg-[#181a20] p-1 rounded-full border border-gray-800">
+            {/* Workouts set as Home Route "/" */}
             <Link
-              href="/workouts"
+              href="/"
               className={`px-5 py-1.5 rounded-full text-sm font-semibold transition-colors ${
                 activePage === 'Workouts'
                   ? 'bg-[#212613] text-[#ccff00]'
@@ -94,7 +95,7 @@ const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
 
-        {/* Right Side: Status Badges */}
+        
         <div className="navbar-end flex items-center gap-4">
           <Link
             href="/my-plan"
