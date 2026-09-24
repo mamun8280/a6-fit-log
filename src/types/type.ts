@@ -3,7 +3,7 @@ export interface IWorkout {
   name: string;
   category: string[];
   equipment: string[];
-  difficulty: string;
+  difficulty: 'Beginner' | 'Intermediate' | 'Advanced'; 
   sets: number;
   reps: string;
   duration: number; // in minutes

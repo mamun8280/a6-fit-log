@@ -1,30 +1,15 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-
-export interface Workout {
-  id: string;
-  name: string;
-  category: string[];
-  equipment: string[];
-  difficulty: string;
-  sets: number;
-  reps: string;
-  duration: number; // in minutes
-  calories: number;
-  rating: number;
-  image: string;
-  description: string;
-  instructions: string[];
-}
+import { IWorkout } from '@/types/type';
 
 interface FitlogContextType {
-  todayPlan: Workout[];
-  savedList: Workout[];
+  todayPlan: IWorkout[];
+  savedList: IWorkout[];
   completedList: string[];
-  addToPlan: (workout: Workout) => void;
+  addToPlan: (workout: IWorkout) => void;
   removeFromPlan: (id: string) => void;
-  addToSaved: (workout: Workout) => void;
+  addToSaved: (workout: IWorkout) => void;
   removeFromSaved: (id: string) => void;
   toggleMarkAsDone: (id: string) => void;
   toastMessage: string | null;
@@ -33,8 +18,7 @@ interface FitlogContextType {
 const FitlogContext = createContext<FitlogContextType | undefined>(undefined);
 
 export const FitlogProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Lazy initialization logic for LocalStorage to avoid calling setState synchronously inside useEffect
-  const [todayPlan, setTodayPlan] = useState<Workout[]>(() => {
+  const [todayPlan, setTodayPlan] = useState<IWorkout[]>(() => {
     if (typeof window === 'undefined') return [];
     try {
       const saved = localStorage.getItem('fitlog_todayPlan');
@@ -44,7 +28,7 @@ export const FitlogProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     }
   });
 
-  const [savedList, setSavedList] = useState<Workout[]>(() => {
+  const [savedList, setSavedList] = useState<IWorkout[]>(() => {
     if (typeof window === 'undefined') return [];
     try {
       const saved = localStorage.getItem('fitlog_savedList');
@@ -66,7 +50,6 @@ export const FitlogProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // Synchronize state updates to LocalStorage
   useEffect(() => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('fitlog_todayPlan', JSON.stringify(todayPlan));
@@ -90,7 +73,7 @@ export const FitlogProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     setTimeout(() => setToastMessage(null), 3000);
   };
 
-  const addToPlan = (workout: Workout) => {
+  const addToPlan = (workout: IWorkout) => {
     if (todayPlan.length >= 5) {
       showToast('Maximum 5 lifts allowed for today!');
       return;
@@ -108,7 +91,7 @@ export const FitlogProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     showToast("Removed from today's plan");
   };
 
-  const addToSaved = (workout: Workout) => {
+  const addToSaved = (workout: IWorkout) => {
     if (savedList.some((item) => item.id === workout.id)) {
       showToast('Already saved for later!');
       return;
