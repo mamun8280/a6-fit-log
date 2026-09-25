@@ -93,7 +93,7 @@ const MyPlanPage = () => {
                                     : 'text-gray-400 hover:text-white'
                             }`}
                         >
-                            Saved Workouts
+                            Saved 
                         </button>
                     </div>
 

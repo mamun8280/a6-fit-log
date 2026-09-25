@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import { IWorkout } from '@/types/type';
-import { useFitlog } from '@/context/FitlogContext'; // ১. কনটেক্সট ইমপোর্ট করা হলো
+import { useFitlog } from '@/context/FitlogContext';
 
 function NavbarWrapper({ activePage }: { activePage?: string }) {
     return (
@@ -21,7 +21,6 @@ export default function WorkoutDetailsPage() {
     const params = useParams();
     const id = params?.id;
 
-    // ২. কনটেক্সট থেকে ফাংশনগুলো নিয়ে আসা হলো
     const { addToPlan, addToSaved } = useFitlog();
 
     const [workout, setWorkout] = useState<IWorkout | null>(null);
@@ -83,23 +82,27 @@ export default function WorkoutDetailsPage() {
 
                     <div className="space-y-6">
                         <div>
-                            <div className="flex flex-wrap gap-2 mb-3">
-                                {workout.category?.map((cat, idx) => (
+                            {/* Name */}
+                            <h1 className="text-3xl md:text-4xl font-black uppercase tracking-tight text-white mb-2">
+                                {workout.name}
+                            </h1>
+                            
+                            {/* Description */}
+                            <p className="text-gray-400 text-sm leading-relaxed mb-4">
+                                {workout.description}
+                            </p>
+
+                            {/* Name ebong description er niche muscleGroups (Chest, Arms) gulo rakha holo */}
+                            <div className="flex flex-wrap gap-2">
+                                {workout.muscleGroups?.map((muscle, idx) => (
                                     <span
                                         key={idx}
                                         className="bg-[#ccff00] text-black text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider"
                                     >
-                                        {cat}
+                                        {muscle}
                                     </span>
                                 ))}
                             </div>
-
-                            <h1 className="text-3xl md:text-4xl font-black uppercase tracking-tight text-white mb-2">
-                                {workout.name}
-                            </h1>
-                            <p className="text-gray-400 text-sm leading-relaxed">
-                                {workout.description}
-                            </p>
                         </div>
 
                         <div className="bg-[#13151b] border border-gray-800/80 rounded-2xl overflow-hidden divide-y divide-gray-800/60 text-xs md:text-sm">
@@ -148,7 +151,6 @@ export default function WorkoutDetailsPage() {
                             </div>
                         )}
 
-                        {/* ৩. বাটন দুটিতে onClick হ্যান্ডলার যুক্ত করা হলো */}
                         <div className="flex flex-col sm:flex-row gap-4 pt-4">
                             <button
                                 onClick={() => addToPlan(workout)}

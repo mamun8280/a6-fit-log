@@ -33,7 +33,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-[#0a0a0c] text-white">
         <FitlogProvider>
           <NavbarWrapper />
-          <main className="flex-grow">{children}</main>
+          <main className="grow">{children}</main>
           <Footer />
         </FitlogProvider>
       </body>

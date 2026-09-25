@@ -7,7 +7,7 @@ import { IWorkout } from '@/types/type';
 
 interface SavedWorkoutsListProps {
     workouts: IWorkout[];
-    onRemove: (id: number) => void; // string | number এর পরিবর্তে শুধু number দিন
+    onRemove: (id: number) => void;
 }
 
 const SavedWorkoutsList: React.FC<SavedWorkoutsListProps> = ({ workouts, onRemove }) => {
@@ -35,6 +35,10 @@ const SavedWorkoutsList: React.FC<SavedWorkoutsListProps> = ({ workouts, onRemov
                             </div>
                             <div>
                                 <h4 className="font-black uppercase text-sm text-white">{workout.name}</h4>
+                                {/* Name er niche equipment dekhanor jonno eta add kora holo */}
+                                <p className="text-xs text-gray-400 mt-0.5">
+                                    {Array.isArray(workout.equipment) ? workout.equipment.join(', ') : workout.equipment || 'None'}
+                                </p>
                                 <p className="text-xs text-gray-400 mt-1">
                                     ⏱️ {workout.duration} min • 🔥 {workout.caloriesBurned || workout.calories} kcal • ★ {workout.rating}
                                 </p>

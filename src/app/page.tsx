@@ -13,7 +13,7 @@ const Page = () => {
   const [error, setError] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<'duration' | 'calories' | 'rating'>('duration');
 
-  // API থেকে ডেটা ফেচ করা
+  
   useEffect(() => {
     fetch('https://api.abcz.workers.dev/api/fitlog')
       .then((res) => {
@@ -37,10 +37,10 @@ const Page = () => {
 
   return (
     <div className="min-h-screen bg-[#0a0c10] text-white">
-      {/* Banner Component */}
+      
       <Banner />
 
-      {/* Library Section */}
+     
       <section className="container mx-auto px-4 md:px-8 py-12 border-t border-gray-900">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
           <div>
@@ -48,7 +48,7 @@ const Page = () => {
             <p className="text-gray-400 text-sm mt-1">Twelve lifts covering every major muscle group.</p>
           </div>
 
-          {/* Sort Dropdown */}
+         
           <div className="flex items-center gap-3 bg-[#13151b] border border-gray-800 px-4 py-2 rounded-xl">
             <span className="text-xs text-gray-400 font-semibold uppercase">Sort By:</span>
             <select
