@@ -6,12 +6,12 @@ import { IWorkout } from '@/types/type';
 interface FitlogContextType {
   todayPlan: IWorkout[];
   savedList: IWorkout[];
-  completedList: string[];
+  completedList: number[];
   addToPlan: (workout: IWorkout) => void;
-  removeFromPlan: (id: string) => void;
+  removeFromPlan: (id: number) => void;
   addToSaved: (workout: IWorkout) => void;
-  removeFromSaved: (id: string) => void;
-  toggleMarkAsDone: (id: string) => void;
+  removeFromSaved: (id: number) => void;
+  toggleMarkAsDone: (id: number) => void;
   toastMessage: string | null;
 }
 
@@ -38,7 +38,7 @@ export const FitlogProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     }
   });
 
-  const [completedList, setCompletedList] = useState<string[]>(() => {
+  const [completedList, setCompletedList] = useState<number[]>(() => {
     if (typeof window === 'undefined') return [];
     try {
       const saved = localStorage.getItem('fitlog_completedList');
@@ -86,7 +86,7 @@ export const FitlogProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     showToast("Added to today's plan!");
   };
 
-  const removeFromPlan = (id: string) => {
+  const removeFromPlan = (id: number) => {
     setTodayPlan((prev) => prev.filter((item) => item.id !== id));
     showToast("Removed from today's plan");
   };
@@ -100,12 +100,12 @@ export const FitlogProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     showToast('Saved for later!');
   };
 
-  const removeFromSaved = (id: string) => {
+  const removeFromSaved = (id: number) => {
     setSavedList((prev) => prev.filter((item) => item.id !== id));
     showToast('Removed from saved list');
   };
 
-  const toggleMarkAsDone = (id: string) => {
+  const toggleMarkAsDone = (id: number) => {
     setCompletedList((prev) =>
       prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]
     );

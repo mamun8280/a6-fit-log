@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import { IWorkout } from '@/types/type';
+import { useFitlog } from '@/context/FitlogContext'; // ১. কনটেক্সট ইমপোর্ট করা হলো
 
 function NavbarWrapper({ activePage }: { activePage?: string }) {
     return (
@@ -19,6 +20,9 @@ function NavbarWrapper({ activePage }: { activePage?: string }) {
 export default function WorkoutDetailsPage() {
     const params = useParams();
     const id = params?.id;
+
+    // ২. কনটেক্সট থেকে ফাংশনগুলো নিয়ে আসা হলো
+    const { addToPlan, addToSaved } = useFitlog();
 
     const [workout, setWorkout] = useState<IWorkout | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
@@ -144,11 +148,18 @@ export default function WorkoutDetailsPage() {
                             </div>
                         )}
 
+                        {/* ৩. বাটন দুটিতে onClick হ্যান্ডলার যুক্ত করা হলো */}
                         <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                            <button className="flex-1 bg-[#ccff00] hover:bg-[#b3e600] text-black font-extrabold text-sm py-3.5 px-6 rounded-xl transition-all uppercase tracking-wide flex items-center justify-center gap-2">
+                            <button
+                                onClick={() => addToPlan(workout)}
+                                className="flex-1 bg-[#ccff00] hover:bg-[#b3e600] text-black font-extrabold text-sm py-3.5 px-6 rounded-xl transition-all uppercase tracking-wide flex items-center justify-center gap-2 cursor-pointer"
+                            >
                                 📅 Add to today&apos;s plan
                             </button>
-                            <button className="flex-1 bg-[#13151b] hover:bg-gray-800 text-white border border-gray-700 font-extrabold text-sm py-3.5 px-6 rounded-xl transition-all uppercase tracking-wide flex items-center justify-center gap-2">
+                            <button
+                                onClick={() => addToSaved(workout)}
+                                className="flex-1 bg-[#13151b] hover:bg-gray-800 text-white border border-gray-700 font-extrabold text-sm py-3.5 px-6 rounded-xl transition-all uppercase tracking-wide flex items-center justify-center gap-2 cursor-pointer"
+                            >
                                 🔖 Save for later 
                             </button>
                         </div>
