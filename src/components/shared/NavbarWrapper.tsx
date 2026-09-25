@@ -1,15 +1,17 @@
 'use client';
 
 import React from 'react';
+import { usePathname } from 'next/navigation';
 import Navbar from './Navbar';
 import { useFitlog } from '@/context/FitlogContext';
 
-interface NavbarWrapperProps {
-  activePage?: 'Workouts' | 'My Plan';
-}
+export default function NavbarWrapper() {
+  const pathname = usePathname();
 
-export default function NavbarWrapper({ activePage }: NavbarWrapperProps) {
   const { todayPlan, savedList } = useFitlog();
+
+  const activePage =
+    pathname === '/my-plan' ? 'My Plan' : 'Workouts';
 
   return (
     <Navbar
