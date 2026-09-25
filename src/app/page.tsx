@@ -5,14 +5,7 @@ import Banner from '@/components/Banner';
 import WorkoutCard from '@/components/WorkoutCard';
 import { IWorkout } from '@/types/type';
 
-const NavbarWrapper = ({ activePage }: { activePage?: string }) => (
-  <nav aria-label="Main navigation" className="border-b border-gray-900 px-4 py-4 md:px-8">
-    <div className="container mx-auto flex items-center justify-between">
-      <span className="font-black uppercase tracking-tight">FitLog</span>
-      {activePage && <span className="text-xs font-bold uppercase text-[#ccff00]">{activePage}</span>}
-    </div>
-  </nav>
-);
+
 
 const Page = () => {
   const [workouts, setWorkouts] = useState<IWorkout[]>([]);
@@ -37,19 +30,13 @@ const Page = () => {
       });
   }, []);
 
-  // সর্টিং লজিক
-  const sortedWorkouts = [...workouts].sort((a, b) => {
-    if (sortBy === 'duration') return a.duration - b.duration;
-    if (sortBy === 'calories') return a.calories - b.calories;
-    if (sortBy === 'rating') return b.rating - a.rating;
-    return 0;
-  });
+  const sortedWorkouts = [...workouts].sort((a, b) =>
+    Number(b[sortBy]) - Number(a[sortBy])
+  );
+
 
   return (
     <div className="min-h-screen bg-[#0a0c10] text-white">
-      {/* Navbar */}
-      <NavbarWrapper activePage="Workouts" />
-
       {/* Banner Component */}
       <Banner />
 
@@ -66,7 +53,7 @@ const Page = () => {
             <span className="text-xs text-gray-400 font-semibold uppercase">Sort By:</span>
             <select
               value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as any)}
+              onChange={(e) => setSortBy(e.target.value as 'duration' | 'calories' | 'rating')}
               className="bg-transparent text-white text-xs font-bold outline-none cursor-pointer uppercase"
             >
               <option value="duration" className="bg-[#13151b]">Duration</option>
@@ -81,7 +68,7 @@ const Page = () => {
 
         {!loading && !error && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {sortedWorkouts.map((workout) => (
+            {sortedWorkouts.map((workout: IWorkout) => (
               <WorkoutCard key={workout.id} workout={workout} />
             ))}
           </div>

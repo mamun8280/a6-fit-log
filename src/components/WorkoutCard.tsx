@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { IWorkout } from '@/types/type';
 
 interface WorkoutCardProps {
@@ -10,9 +9,12 @@ interface WorkoutCardProps {
 }
 
 const WorkoutCard: React.FC<WorkoutCardProps> = ({ workout }) => {
+    // এখানে _id বা id যেটাই থাকুক না কেন, তা ডাইনামিকালি ধরবে
+    const workoutId = workout.id;
+
     return (
-        <Link
-            href={`/workout/${workout.id}`}
+        <a
+            href={`/workout/${workoutId}`}
             className="group bg-[#13151b] border border-gray-800/80 hover:border-gray-700 rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300"
         >
             <div>
@@ -45,7 +47,7 @@ const WorkoutCard: React.FC<WorkoutCardProps> = ({ workout }) => {
                         {workout.name}
                     </h3>
 
-                    {/* Equipment Subtitle (Fixed with Array check) */}
+                    {/* Equipment Subtitle */}
                     <p className="text-gray-400 text-xs font-medium line-clamp-1">
                         {Array.isArray(workout.equipment)
                             ? workout.equipment.join(', ')
@@ -57,10 +59,12 @@ const WorkoutCard: React.FC<WorkoutCardProps> = ({ workout }) => {
             {/* Bottom Stats Row */}
             <div className="px-4 pb-4 pt-2 flex items-center gap-4 text-gray-400 text-xs font-semibold">
                 <span className="flex items-center gap-1.5">⏱️ {workout.duration} min</span>
-                <span className="flex items-center gap-1.5">🔥 {workout.calories} kcal</span>
+                <span className="flex items-center gap-1.5">
+                    🔥 {workout.caloriesBurned || workout.calories} kcal
+                </span>
                 <span className="flex items-center gap-1.5 text-gray-300">★ {workout.rating}</span>
             </div>
-        </Link>
+        </a>
     );
 };
 

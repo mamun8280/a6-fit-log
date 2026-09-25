@@ -3,8 +3,18 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
-import NavbarWrapper from '@/components/NavbarWrapper';
 import { IWorkout } from '@/types/type';
+
+function NavbarWrapper({ activePage }: { activePage?: string }) {
+    return (
+        <nav className="border-b border-gray-800 bg-[#0a0c10] px-4 py-4 md:px-8">
+            <div className="container mx-auto flex items-center justify-between">
+                <span className="text-xl font-black uppercase text-[#ccff00]">FitLog</span>
+                <span className="text-sm font-bold uppercase tracking-wide text-white">{activePage}</span>
+            </div>
+        </nav>
+    );
+}
 
 export default function WorkoutDetailsPage() {
     const params = useParams();
@@ -14,16 +24,18 @@ export default function WorkoutDetailsPage() {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
-    // সিঙ্গেল ওয়ার্কআউট ডেটা ফেচ করা
     useEffect(() => {
         if (!id) return;
 
         fetch(`https://api.abcz.workers.dev/api/fitlog/${id}`)
             .then((res) => {
-                if (!res.ok) throw new Error('Failed to fetch workout details');
+                if (!res.ok) throw new Error('Workout details not found on server');
                 return res.json();
             })
             .then((data) => {
+                if (!data || Object.keys(data).length === 0) {
+                    throw new Error('No workout data found');
+                }
                 setWorkout(data);
                 setLoading(false);
             })
@@ -56,7 +68,6 @@ export default function WorkoutDetailsPage() {
             <main className="container mx-auto px-4 md:px-8 py-12">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
                     
-                    {/* Left Side: Large Image */}
                     <div className="relative w-full h-[450px] md:h-[550px] bg-[#13151b] rounded-3xl overflow-hidden border border-gray-800">
                         <Image
                             src={workout.image}
@@ -66,10 +77,8 @@ export default function WorkoutDetailsPage() {
                         />
                     </div>
 
-                    {/* Right Side: Details & Actions */}
                     <div className="space-y-6">
                         <div>
-                            {/* Category Badges */}
                             <div className="flex flex-wrap gap-2 mb-3">
                                 {workout.category?.map((cat, idx) => (
                                     <span
@@ -89,7 +98,6 @@ export default function WorkoutDetailsPage() {
                             </p>
                         </div>
 
-                        {/* Specs Table */}
                         <div className="bg-[#13151b] border border-gray-800/80 rounded-2xl overflow-hidden divide-y divide-gray-800/60 text-xs md:text-sm">
                             <div className="flex justify-between p-4">
                                 <span className="text-gray-400 font-semibold uppercase">Equipment</span>
@@ -115,7 +123,9 @@ export default function WorkoutDetailsPage() {
                             </div>
                             <div className="flex justify-between p-4">
                                 <span className="text-gray-400 font-semibold uppercase">Calories</span>
-                                <span className="font-bold text-white">{workout.calories} kcal</span>
+                                <span className="font-bold text-white">
+                                    {workout.caloriesBurned || workout.calories} kcal
+                                </span>
                             </div>
                             <div className="flex justify-between p-4">
                                 <span className="text-gray-400 font-semibold uppercase">Rating</span>
@@ -123,7 +133,6 @@ export default function WorkoutDetailsPage() {
                             </div>
                         </div>
 
-                        {/* Instructions Section */}
                         {workout.instructions && workout.instructions.length > 0 && (
                             <div className="space-y-3">
                                 <h3 className="text-sm font-black uppercase tracking-wider text-white">Instructions</h3>
@@ -135,13 +144,12 @@ export default function WorkoutDetailsPage() {
                             </div>
                         )}
 
-                        {/* Action Buttons */}
                         <div className="flex flex-col sm:flex-row gap-4 pt-4">
                             <button className="flex-1 bg-[#ccff00] hover:bg-[#b3e600] text-black font-extrabold text-sm py-3.5 px-6 rounded-xl transition-all uppercase tracking-wide flex items-center justify-center gap-2">
                                 📅 Add to today&apos;s plan
                             </button>
                             <button className="flex-1 bg-[#13151b] hover:bg-gray-800 text-white border border-gray-700 font-extrabold text-sm py-3.5 px-6 rounded-xl transition-all uppercase tracking-wide flex items-center justify-center gap-2">
-                                🔖 Save for later
+                                🔖 Save for later 
                             </button>
                         </div>
 
