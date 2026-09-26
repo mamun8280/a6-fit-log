@@ -11,7 +11,7 @@ const Page = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('https://api.abcz.workers.dev/api/fitlog')
+    fetch('https://api.api-store.workers.dev/api/fitlog')
       .then((res) => {
         if (!res.ok) {
           throw new Error('Failed to fetch workouts');
