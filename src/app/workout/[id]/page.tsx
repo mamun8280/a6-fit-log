@@ -20,7 +20,7 @@ const WorkoutDetailsPage = () => {
     useEffect(() => {
         if (!id) return;
 
-        fetch(`https://api.api-store.workers.dev/api/fitlog/:id`)
+        fetch(`https://api.api-store.workers.dev/api/fitlog/${id}`)
             .then((res) => {
                 if (!res.ok) {
                     throw new Error('Workout not found');
